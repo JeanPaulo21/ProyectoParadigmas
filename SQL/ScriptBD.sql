@@ -7,7 +7,9 @@ CREATE TABLE T_USUARIOS (
     Nombre VARCHAR(50),
     Correo VARCHAR(100) UNIQUE,
     Contraseña VARCHAR(255),
-    Rol ENUM('admin', 'cliente')
+    Rol ENUM('admin', 'cliente'),
+    Estado BOOLEAN DEFAULT TRUE,
+    FechaCreacion DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE T_PRODUCTOS (
@@ -17,7 +19,9 @@ CREATE TABLE T_PRODUCTOS (
     Precio DECIMAL(10, 2),
     Stock INT,
     Imagen VARCHAR(255),
-    Categoria ENUM('Computación', 'Consolas', 'VideoJuegos', 'DispositivosMoviles')
+    Categoria ENUM('Computación', 'Consolas', 'VideoJuegos', 'DispositivosMoviles'),
+    Estado BOOLEAN DEFAULT TRUE,
+    FechaCreacion DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE T_PEDIDOS (
@@ -26,7 +30,9 @@ CREATE TABLE T_PEDIDOS (
     Fecha DATETIME,
     Total DECIMAL(10, 2),
     Estado ENUM('pendiente', 'procesando', 'completado', 'cancelado'),
-    FOREIGN KEY (UsuarioID) REFERENCES T_USUARIOS(ID)
+    FOREIGN KEY (UsuarioID) REFERENCES T_USUARIOS(ID),
+    Estado BOOLEAN DEFAULT TRUE,
+    FechaCreacion DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE T_DETALLE_PEDIDOS (
@@ -36,7 +42,9 @@ CREATE TABLE T_DETALLE_PEDIDOS (
     Cantidad INT,
     Precio DECIMAL(10, 2),
     FOREIGN KEY (PedidoID) REFERENCES T_PEDIDOS(ID),
-    FOREIGN KEY (ProductoID) REFERENCES T_PRODUCTOS(ID)
+    FOREIGN KEY (ProductoID) REFERENCES T_PRODUCTOS(ID),
+    Estado BOOLEAN DEFAULT TRUE,
+    FechaCreacion DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE T_CARRITO (
@@ -45,5 +53,7 @@ CREATE TABLE T_CARRITO (
     ProductoID INT,
     Cantidad INT,
     FOREIGN KEY (UsuarioID) REFERENCES T_USUARIOS(ID),
-    FOREIGN KEY (ProductoID) REFERENCES T_PRODUCTOS(ID)
+    FOREIGN KEY (ProductoID) REFERENCES T_PRODUCTOS(ID),
+    Estado BOOLEAN DEFAULT TRUE,
+    FechaCreacion DATETIME DEFAULT CURRENT_TIMESTAMP
 );
