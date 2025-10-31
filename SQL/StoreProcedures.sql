@@ -4,184 +4,162 @@
 /*USUARIOS*/
 --------------
 /*CREAR*/
-DELIMITER //
-CREATE PROCEDURE sp_CrearUsuario (
-    IN p_Nombre VARCHAR(50),
-    IN p_Correo VARCHAR(100),
-    IN p_Contrasena VARCHAR(255),    
-)
+CREATE PROCEDURE SC_Tienda.SP_CrearUsuario
+    @Nombre VARCHAR(50),
+    @Correo VARCHAR(100),
+    @Contrasena VARCHAR(255)
+AS
 BEGIN
-    INSERT INTO T_USUARIOS (Nombre, Correo, Contraseña, Rol, Estado, FechaCreacion)
-    VALUES (p_Nombre, p_Correo, p_Contrasena, 'cliente', TRUE, NOW());
-END //
-DELIMITER ;
+    INSERT INTO SC_Tienda.T_USUARIOS (Nombre, Correo, Contrasena, Rol, Estado, FechaCreacion)
+    VALUES (@Nombre, @Correo, @Contrasena, 'cliente', 1, GETDATE());
+END
+GO
+
 /*ACTUALIZAR*/
-DELIMITER //
-CREATE PROCEDURE sp_ActualizarUsuario (
-    IN p_ID INT,
-    IN p_Nombre VARCHAR(50),
-    IN p_Correo VARCHAR(100),
-    IN p_Contrasena VARCHAR(255),
-    IN p_Rol ENUM('admin', 'cliente')
-)
-BEGIN
-    UPDATE T_USUARIOS
-    SET 
-        Nombre = p_Nombre,
-        Correo = p_Correo,
-        Contraseña = p_Contrasena,
-        Rol = p_Rol
-    WHERE ID = p_ID AND Estado = TRUE;
-END //
-DELIMITER ;
+CREATE PROCEDURE SC_Tienda.SP_ActualizarUsuario
+    @ID INT,
+    @Nombre VARCHAR(50),
+    @Correo VARCHAR(100),
+    @Contrasena VARCHAR(255)
+AS
+BEGINQ
+    UPDATE SC_Tienda.T_USUARIOS
+    SET Nombre = @Nombre,
+        Correo = @Correo,
+        Contrasena = @Contrasena
+    WHERE ID = @ID;
+END
 /*CAMBIAR ESTADO*/
-DELIMITER //
-CREATE PROCEDURE sp_CambiarEstadoUsuario (
-    IN p_ID INT,
-    IN p_Estado BOOLEAN
-)
+CREATE PROCEDURE SC_Tienda.SP_CambiarEstadoUsuario
+    @ID INT,
+    @Estado BIT
+AS
 BEGIN
-    UPDATE T_USUARIOS
-    SET Estado = p_Estado
-    WHERE ID = p_ID;
-END //
-DELIMITER ;
+    UPDATE SC_Tienda.T_USUARIOS
+    SET Estado = @Estado
+    WHERE ID = @ID;
+END
 /*OBTENER POR ID*/
-DELIMITER //
-CREATE PROCEDURE sp_ObtenerUsuarioPorId (
-    IN p_ID INT
-)
+CREATE PROCEDURE SC_Tienda.SP_ObtenerUsuarioPorID
+    @ID INT
+AS
 BEGIN
-    SELECT ID, Nombre, Correo, Rol, Estado, FechaCreacion
-    FROM T_USUARIOS
-    WHERE ID = p_ID;
-END //
-DELIMITER ;
+    SELECT *
+    FROM SC_Tienda.T_USUARIOS
+    WHERE ID = @ID;
+END
 /*LISTAR TODOS LOS USUARIOS*/
-DELIMITER //
-CREATE PROCEDURE sp_ListarUsuariosActivos ()
+CREATE PROCEDURE SC_Tienda.SP_ListarUsuarios
+AS
 BEGIN
-    SELECT ID, Nombre, Correo, Rol, Estado, FechaCreacion
-    FROM T_USUARIOS
-    ORDER BY FechaCreacion DESC;
-END //
-DELIMITER ;
+    SELECT *
+    FROM SC_Tienda.T_USUARIOS;
+END
 --------------
 /*PRODUCTOS*/
 --------------
 /*CREAR*/
-DELIMITER //
-CREATE PROCEDURE sp_CrearProducto (
-    IN p_Nombre VARCHAR(50),
-    IN p_Descripcion TEXT,
-    IN p_Precio DECIMAL(10, 2),
-    IN p_Categoria VARCHAR(50)
-)
+CREATE PROCEDURE SC_Tienda.SP_CrearProducto
+    @Nombre VARCHAR(100),
+    @Descripcion TEXT,
+    @Precio DECIMAL(10, 2),
+    @Stock INT,
+    @Imagen VARCHAR(255),
+    @Categoria VARCHAR(20)
+AS
 BEGIN
-    INSERT INTO T_PRODUCTOS (Nombre, Descripcion, Precio, Categoria, FechaCreacion)
-    VALUES (p_Nombre, p_Descripcion, p_Precio, p_Categoria, NOW());
-END //
-DELIMITER ;
+    INSERT INTO SC_Tienda.T_PRODUCTOS (Nombre, Descripcion, Precio, Stock, Imagen, Categoria, Estado, FechaCreacion)
+    VALUES (@Nombre, @Descripcion, @Precio, @Stock, @Imagen, @Categoria, 1, GETDATE());
+END
+GO
 /*ACTUALIZAR*/
-DELIMITER //    
-CREATE PROCEDURE sp_ActualizarProducto (
-    IN p_ID INT,
-    IN p_Nombre VARCHAR(50),
-    IN p_Descripcion TEXT,
-    IN p_Precio DECIMAL(10, 2),
-    IN p_Categoria VARCHAR(50)
-)
+CREATE PROCEDURE SC_Tienda.SP_ActualizarProducto
+    @ID INT,
+    @Nombre VARCHAR(100),
+    @Descripcion TEXT,
+    @Precio DECIMAL(10, 2),
+    @Stock INT,
+    @Imagen VARCHAR(255),
+    @Categoria VARCHAR(20)
+AS
 BEGIN
-    UPDATE T_PRODUCTOS
-    SET 
-        Nombre = p_Nombre,
-        Descripcion = p_Descripcion,
-        Precio = p_Precio,
-        Categoria = p_Categoria
-    WHERE ID = p_ID;
-END //
-DELIMITER ;
+    UPDATE SC_Tienda.T_PRODUCTOS
+    SET Nombre = @Nombre,
+        Descripcion = @Descripcion,
+        Precio = @Precio,
+        Stock = @Stock,
+        Imagen = @Imagen,
+        Categoria = @Categoria
+    WHERE ID = @ID;
+END
+GO
 /*CAMBIAR ESTADO*/
-DELIMITER //    
-CREATE PROCEDURE sp_CambiarEstadoProducto (
-    IN p_ID INT,
-    IN p_Estado BOOLEAN
-)
+CREATE PROCEDURE SC_Tienda.SP_CambiarEstadoProducto
+    @ID INT,
+    @Estado BIT
+AS
 BEGIN
-    UPDATE T_PRODUCTOS
-    SET Estado = p_Estado
-    WHERE ID = p_ID;
-END //
-DELIMITER ;
+    UPDATE SC_Tienda.T_PRODUCTOS
+    SET Estado = @Estado
+    WHERE ID = @ID;
+END
+GO
 /*OBTENER POR ID*/
-DELIMITER //
-CREATE PROCEDURE sp_ObtenerProductoPorId (
-    IN p_ID INT
-)
+CREATE PROCEDURE SC_Tienda.SP_ObtenerProductoPorID
+    @ID INT
+AS
 BEGIN
-    SELECT ID, Nombre, Descripcion, Precio, Categoria, Estado, FechaCreacion
-    FROM T_PRODUCTOS
-    WHERE ID = p_ID;
-END //
-DELIMITER ;
+    SELECT *
+    FROM SC_Tienda.T_PRODUCTOS
+    WHERE ID = @ID;
+END 
+GO
 /*LISTAR TODOS LOS PRODUCTOS*/
-DELIMITER //
-CREATE PROCEDURE sp_ListarProductos ()
+CREATE PROCEDURE SC_Tienda.SP_ListarProductos
+AS
 BEGIN
-    SELECT ID, Nombre, Descripcion, Precio, Categoria, Estado, FechaCreacion
-    FROM T_PRODUCTOS
-    ORDER BY FechaCreacion DESC;
-END //
-DELIMITER ;
+    SELECT *
+    FROM SC_Tienda.T_PRODUCTOS;
+END 
+GO
 --------------
 /*CARRITO*/
 --------------
 /*AGREGAR AL CARRITO*/
-DELIMITER //    
-CREATE PROCEDURE sp_AgregarAlCarrito (
-    IN p_UsuarioID INT,
-    IN p_ProductoID INT,
-    IN p_Cantidad INT
-)
+CREATE PROCEDURE SC_Tienda.SP_AgregarAlCarrito
+    @UsuarioID INT,
+    @ProductoID INT,
+    @Cantidad INT
+AS
 BEGIN
-    INSERT INTO T_CARRITO (UsuarioID, ProductoID, Cantidad, FechaCreacion)
-    VALUES (p_UsuarioID, p_ProductoID, p_Cantidad, NOW());
-END //
-DELIMITER ;
-/*ACTUALIZAR CANTIDAD EN CARRITO*/
-DELIMITER //
-CREATE PROCEDURE sp_ActualizarCantidadEnCarrito (
-    IN p_UsuarioID INT,
-    IN p_ProductoID INT,
-    IN p_Cantidad INT
-)
-BEGIN
-    UPDATE T_CARRITO
-    SET Cantidad = p_Cantidad
-    WHERE UsuarioID = p_UsuarioID AND ProductoID = p_ProductoID;
-END //
-DELIMITER ;
+    INSERT INTO SC_Tienda.T_CARRITO (UsuarioID, ProductoID, Cantidad, FechaAgregado)
+    VALUES (@UsuarioID, @ProductoID, @Cantidad, GETDATE());
+END
+GO
 /*REMOVER DEL CARRITO*/
-DELIMITER //
-CREATE PROCEDURE sp_RemoverDelCarrito (
-    IN p_UsuarioID INT,
-    IN p_ProductoID INT
-)
+CREATE PROCEDURE SC_Tienda.SP_RemoverDelCarrito
+    @ID INT
+AS
 BEGIN
-    DELETE FROM T_CARRITO
-    WHERE UsuarioID = p_UsuarioID AND ProductoID = p_ProductoID;
-END //
-DELIMITER ;
+    DELETE FROM SC_Tienda.T_CARRITO
+    WHERE ID = @ID;
+END
+GO
 /*LISTAR CARRITO POR USUARIO*/
-DELIMITER //
-CREATE PROCEDURE sp_ListarCarritoPorUsuario (
-    IN p_UsuarioID INT
-)
+CREATE PROCEDURE SC_Tienda.SP_ListarCarritoPorUsuario
+    @UsuarioID INT  
+AS
 BEGIN
-    SELECT C.ProductoID, P.Nombre, P.Precio, C.Cantidad
-    FROM T_CARRITO C
-    JOIN T_PRODUCTOS P ON C.ProductoID = P.ID
-    WHERE C.UsuarioID = p_UsuarioID;
-END //
-DELIMITER ;
-
+    SELECT *
+    FROM SC_Tienda.T_CARRITO
+    WHERE UsuarioID = @UsuarioID;
+END 
+GO
+/*LISTAR TODOS LOS CARRITOS*/
+CREATE PROCEDURE SC_Tienda.SP_ListarTodosLosCarritos
+AS
+BEGIN
+    SELECT *
+    FROM SC_Tienda.T_CARRITO;
+END
+GO  
