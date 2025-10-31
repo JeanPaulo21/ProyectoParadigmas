@@ -22,7 +22,7 @@ CREATE OR ALTER PROCEDURE SC_Tienda.SP_ActualizarUsuario
     @Correo VARCHAR(100),
     @Contrasena VARCHAR(255)
 AS
-BEGINQ
+BEGIN
     UPDATE SC_Tienda.T_USUARIOS
     SET Nombre = @Nombre,
         Correo = @Correo,
@@ -124,6 +124,114 @@ BEGIN
     SELECT *
     FROM SC_Tienda.T_PRODUCTOS;
 END 
+GO
+-------------- 
+/*PEDIDOS*/
+--------------
+/*CREAR*/
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_CrearPedido
+    @UsuarioID INT,
+    @Total DECIMAL(10,2),
+    @Estado VARCHAR(20)
+AS
+BEGIN
+    INSERT INTO SC_Tienda.T_PEDIDOS (UsuarioID, Total, Estado, Fecha, FechaCreacion)
+    VALUES (@UsuarioID, @Total, @Estado, GETDATE(), GETDATE());
+END
+GO
+/*ACTUALIZAR*/
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_ActualizarPedido
+    @ID INT,
+    @UsuarioID INT,
+    @Total DECIMAL(10,2),
+    @Estado VARCHAR(20)
+AS
+BEGIN
+    UPDATE SC_Tienda.T_PEDIDOS
+    SET UsuarioID = @UsuarioID,
+        Total = @Total,
+        Estado = @Estado
+    WHERE ID = @ID;
+END
+GO
+/*CAMBIAR ESTADO*/
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_CambiarEstadoPedido
+    @ID INT,
+    @Estado VARCHAR(20)
+AS
+BEGIN
+    UPDATE SC_Tienda.T_PEDIDOS
+    SET Estado = @Estado
+    WHERE ID = @ID;
+END
+GO
+/*OBTENER POR ID*/
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_ObtenerPedidoPorID
+    @ID INT
+AS
+BEGIN
+    SELECT *
+    FROM SC_Tienda.T_PEDIDOS
+    WHERE ID = @ID;
+END
+GO
+/*LISTAR TODOS LOS PEDIDOS*/
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_ListarPedidos
+AS
+BEGIN
+    SELECT *
+    FROM SC_Tienda.T_PEDIDOS;
+END
+GO
+-------------- 
+/*DETALLE PEDIDOS*/
+--------------
+/*CREAR*/
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_CrearDetallePedido
+    @PedidoID INT,
+    @ProductoID INT,
+    @Cantidad INT,
+    @Precio DECIMAL(10,2)
+AS
+BEGIN
+    INSERT INTO SC_Tienda.T_DETALLE_PEDIDOS (PedidoID, ProductoID, Cantidad, Precio, FechaCreacion)
+    VALUES (@PedidoID, @ProductoID, @Cantidad, @Precio, GETDATE());
+END
+GO
+/*ACTUALIZAR*/
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_ActualizarDetallePedido
+    @ID INT,
+    @PedidoID INT,
+    @ProductoID INT,
+    @Cantidad INT,
+    @Precio DECIMAL(10,2)
+AS
+BEGIN
+    UPDATE SC_Tienda.T_DETALLE_PEDIDOS
+    SET PedidoID = @PedidoID,
+        ProductoID = @ProductoID,
+        Cantidad = @Cantidad,
+        Precio = @Precio
+    WHERE ID = @ID;
+END
+GO
+/*OBTENER POR ID*/
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_ObtenerDetallePedidoPorID
+    @ID INT
+AS
+BEGIN
+    SELECT *
+    FROM SC_Tienda.T_DETALLE_PEDIDOS
+    WHERE ID = @ID;
+END
+GO
+/*LISTAR TODOS LOS DETALLES*/
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_ListarDetallesPedidos
+AS
+BEGIN
+    SELECT *
+    FROM SC_Tienda.T_DETALLE_PEDIDOS;
+END
 GO
 --------------
 /*CARRITO*/
