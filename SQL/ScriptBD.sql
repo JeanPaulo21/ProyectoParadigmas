@@ -1,41 +1,49 @@
 CREATE DATABASE BD_TiendaProyecto;
 
 USE BD_TiendaProyecto;
-
-CREATE SCHEMA SC_PROYECTO;
-CREATE TABLE SC_PROYECTO.T_USUARIOS (
-    ID INT PRIMARY KEY,
+-------------------------------------------
+CREATE TABLE T_USUARIOS (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
     Nombre VARCHAR(50),
     Correo VARCHAR(100) UNIQUE,
     Contraseña VARCHAR(255),
-    Role enum('admin', 'cliente')
+    Rol ENUM('admin', 'cliente')
 );
-CREATE TABLE SC_PROYECTO.T_PRODUCTOS (
-    ID INT PRIMARY KEY,
+
+CREATE TABLE T_PRODUCTOS (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
     Nombre VARCHAR(100),
     Descripcion TEXT,
     Precio DECIMAL(10, 2),
     Stock INT,
     Imagen VARCHAR(255),
-    Categoria enum('Computación', 'Consolas', 'VideoJuegos','DispositivosMoviles')
+    Categoria ENUM('Computación', 'Consolas', 'VideoJuegos', 'DispositivosMoviles')
 );
-CREATE TABLE SC_PROYECTO.T_DETALLE_PEDIDOS (
-    ID INT PRIMARY KEY,
+
+CREATE TABLE T_PEDIDOS (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    UsuarioID INT,
+    Fecha DATETIME,
+    Total DECIMAL(10, 2),
+    Estado ENUM('pendiente', 'procesando', 'completado', 'cancelado'),
+    FOREIGN KEY (UsuarioID) REFERENCES T_USUARIOS(ID)
+);
+
+CREATE TABLE T_DETALLE_PEDIDOS (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
     PedidoID INT,
     ProductoID INT,
     Cantidad INT,
     Precio DECIMAL(10, 2),
-    FOREIGN KEY (PedidoID) REFERENCES SC_PROYECTO.T_PEDIDOS(ID),
-    FOREIGN KEY (ProductoID) REFERENCES SC_PROYECTO.T_PRODUCTOS(ID)
+    FOREIGN KEY (PedidoID) REFERENCES T_PEDIDOS(ID),
+    FOREIGN KEY (ProductoID) REFERENCES T_PRODUCTOS(ID)
 );
-CREATE TABLE SC_PROYECTO.T_PEDIDOS (
-    ID INT PRIMARY KEY,
-    Fecha DATETIME,
-    Total DECIMAL(10, 2),
-    Estado enum('pendiente', 'procesando', 'completado', 'cancelado'),
-    FOREIGN KEY (UsuarioID) REFERENCES SC_PROYECTO.T_USUARIOS(ID)
-);  
 
-/*usar base de datos 
-crear llaves primarias,foraneas
-podemos usar stored procedures (sp)*/
+CREATE TABLE T_CARRITO (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    UsuarioID INT,
+    ProductoID INT,
+    Cantidad INT,
+    FOREIGN KEY (UsuarioID) REFERENCES T_USUARIOS(ID),
+    FOREIGN KEY (ProductoID) REFERENCES T_PRODUCTOS(ID)
+);
