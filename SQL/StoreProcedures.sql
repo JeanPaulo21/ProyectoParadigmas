@@ -4,7 +4,7 @@
 /*USUARIOS*/
 --------------
 /*CREAR*/
-CREATE PROCEDURE SC_Tienda.SP_CrearUsuario
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_CrearUsuario
     @Nombre VARCHAR(50),
     @Correo VARCHAR(100),
     @Contrasena VARCHAR(255)
@@ -16,7 +16,7 @@ END
 GO
 
 /*ACTUALIZAR*/
-CREATE PROCEDURE SC_Tienda.SP_ActualizarUsuario
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_ActualizarUsuario
     @ID INT,
     @Nombre VARCHAR(50),
     @Correo VARCHAR(100),
@@ -29,8 +29,9 @@ BEGINQ
         Contrasena = @Contrasena
     WHERE ID = @ID;
 END
+GO
 /*CAMBIAR ESTADO*/
-CREATE PROCEDURE SC_Tienda.SP_CambiarEstadoUsuario
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_CambiarEstadoUsuario
     @ID INT,
     @Estado BIT
 AS
@@ -39,8 +40,9 @@ BEGIN
     SET Estado = @Estado
     WHERE ID = @ID;
 END
+GO
 /*OBTENER POR ID*/
-CREATE PROCEDURE SC_Tienda.SP_ObtenerUsuarioPorID
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_ObtenerUsuarioPorID
     @ID INT
 AS
 BEGIN
@@ -49,17 +51,18 @@ BEGIN
     WHERE ID = @ID;
 END
 /*LISTAR TODOS LOS USUARIOS*/
-CREATE PROCEDURE SC_Tienda.SP_ListarUsuarios
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_ListarUsuarios
 AS
 BEGIN
     SELECT *
     FROM SC_Tienda.T_USUARIOS;
 END
+GO
 --------------
 /*PRODUCTOS*/
 --------------
 /*CREAR*/
-CREATE PROCEDURE SC_Tienda.SP_CrearProducto
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_CrearProducto
     @Nombre VARCHAR(100),
     @Descripcion TEXT,
     @Precio DECIMAL(10, 2),
@@ -73,7 +76,7 @@ BEGIN
 END
 GO
 /*ACTUALIZAR*/
-CREATE PROCEDURE SC_Tienda.SP_ActualizarProducto
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_ActualizarProducto
     @ID INT,
     @Nombre VARCHAR(100),
     @Descripcion TEXT,
@@ -94,7 +97,7 @@ BEGIN
 END
 GO
 /*CAMBIAR ESTADO*/
-CREATE PROCEDURE SC_Tienda.SP_CambiarEstadoProducto
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_CambiarEstadoProducto
     @ID INT,
     @Estado BIT
 AS
@@ -105,7 +108,7 @@ BEGIN
 END
 GO
 /*OBTENER POR ID*/
-CREATE PROCEDURE SC_Tienda.SP_ObtenerProductoPorID
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_ObtenerProductoPorID
     @ID INT
 AS
 BEGIN
@@ -115,7 +118,7 @@ BEGIN
 END 
 GO
 /*LISTAR TODOS LOS PRODUCTOS*/
-CREATE PROCEDURE SC_Tienda.SP_ListarProductos
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_ListarProductos
 AS
 BEGIN
     SELECT *
@@ -126,7 +129,7 @@ GO
 /*CARRITO*/
 --------------
 /*AGREGAR AL CARRITO*/
-CREATE PROCEDURE SC_Tienda.SP_AgregarAlCarrito
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_AgregarAlCarrito
     @UsuarioID INT,
     @ProductoID INT,
     @Cantidad INT
@@ -137,7 +140,7 @@ BEGIN
 END
 GO
 /*REMOVER DEL CARRITO*/
-CREATE PROCEDURE SC_Tienda.SP_RemoverDelCarrito
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_RemoverDelCarrito
     @ID INT
 AS
 BEGIN
@@ -146,7 +149,7 @@ BEGIN
 END
 GO
 /*LISTAR CARRITO POR USUARIO*/
-CREATE PROCEDURE SC_Tienda.SP_ListarCarritoPorUsuario
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_ListarCarritoPorUsuario
     @UsuarioID INT  
 AS
 BEGIN
@@ -156,7 +159,7 @@ BEGIN
 END 
 GO
 /*LISTAR TODOS LOS CARRITOS*/
-CREATE PROCEDURE SC_Tienda.SP_ListarTodosLosCarritos
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_ListarTodosLosCarritos
 AS
 BEGIN
     SELECT *
