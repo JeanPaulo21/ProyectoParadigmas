@@ -15,14 +15,23 @@ BEGIN
 END
 GO
 
-/*ACTUALIZAR*/
 CREATE OR ALTER PROCEDURE SC_Tienda.SP_ActualizarUsuario
     @ID INT,
     @Nombre VARCHAR(50),
     @Correo VARCHAR(100),
-    @Contrasena VARCHAR(255)
+    @Contrasena VARCHAR(255) = NULL
 AS
 BEGIN
+    SET NOCOUNT ON;
+
+    -- Si la contraseña viene NULL, se mantiene la existente
+    IF @Contrasena IS NULL OR LTRIM(RTRIM(@Contrasena)) = ''
+    BEGIN
+        SELECT @Contrasena = Contrasena
+        FROM SC_Tienda.T_USUARIOS
+        WHERE ID = @ID;
+    END
+
     UPDATE SC_Tienda.T_USUARIOS
     SET Nombre = @Nombre,
         Correo = @Correo,
@@ -58,6 +67,25 @@ BEGIN
     FROM SC_Tienda.T_USUARIOS;
 END
 GO
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_AutenticarUsuario
+    @Correo VARCHAR(100)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        ID,
+        Nombre,
+        Correo,
+        Contrasena,  
+        Rol,
+        Estado,
+        FechaCreacion
+    FROM SC_Tienda.T_USUARIOS
+    WHERE Correo = @Correo
+          AND Estado = 1;  
+END
+
 --------------
 /*PRODUCTOS*/
 --------------

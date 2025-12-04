@@ -1,0 +1,49 @@
+{% extends "layout_tienda.html" %}
+
+{% block title %}Panel de Administración{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">Bienvenido al Panel de Administración</h2>
+
+    <div class="row">
+
+        <!-- TARJETA USUARIOS -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Gestión de Usuarios</h5>
+                    <p class="card-text">Crear, editar, listar y administrar usuarios del sistema.</p>
+                    <a href="/usuarios/" class="btn btn-primary">Ir a Usuarios</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- TARJETAS FUTURAS -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Productos</h5>
+                    <p class="card-text">Módulo para productos (Próximamente)</p>
+                    <a href="#" class="btn btn-secondary disabled">Próximamente</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Categorías</h5>
+                    <p class="card-text">Módulo para categorías (Próximamente)</p>
+                    <a href="#" class="btn btn-secondary disabled">Próximamente</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

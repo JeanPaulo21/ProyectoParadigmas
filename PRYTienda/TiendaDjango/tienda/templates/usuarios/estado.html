@@ -1,0 +1,23 @@
+{% extends "layout_tienda.html" %}
+
+{% block title %}Cambiar Estado{% endblock %}
+
+{% block content %}
+
+<h3>Cambiar estado del usuario: {{ usuario.Nombre }}</h3>
+
+<p>Estado actual:
+    {% if usuario.Estado %}
+    <span class="badge bg-success">Activo</span>
+    {% else %}
+    <span class="badge bg-danger">Inactivo</span>
+    {% endif %}
+</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <button class="btn btn-warning">Cambiar Estado</button>
+    <a href="/usuarios/" class="btn btn-secondary">Volver</a>
+</form>
+
+{% endblock %}

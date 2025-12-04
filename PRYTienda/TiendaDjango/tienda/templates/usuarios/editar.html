@@ -1,0 +1,32 @@
+{% extends "layout_tienda.html" %}
+
+{% block title %}Editar Usuario{% endblock %}
+
+{% block content %}
+
+<h2>Editar Usuario</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        {{ form.Nombre }}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Correo</label>
+        {{ form.Correo }}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Contraseña (opcional)</label>
+        {{ form.Contrasena }}
+        <small class="text-muted">{{ form.Contrasena.help_text }}</small>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Actualizar</button>
+    <a href="{% url 'listar_usuarios' %}" class="btn btn-secondary">Volver</a>
+</form>
+
+{% endblock %}

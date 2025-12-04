@@ -1,0 +1,29 @@
+{% extends 'layout_cliente.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <h3 class="login-title">Iniciar Sesión</h3>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label>Correo</label>
+            <input type="email" name="correo" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label>Contraseña</label>
+            <input type="password" name="contrasena" class="form-control" required>
+        </div>
+
+        <button class="login-btn">Ingresar</button>
+
+        <a href="{% url 'register' %}" class="login-register-link">
+            ¿No tienes cuenta? Registrarse
+        </a>
+    </form>
+</div>
+{% endblock %}

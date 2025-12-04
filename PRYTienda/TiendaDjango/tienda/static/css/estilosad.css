@@ -1,0 +1,94 @@
+/* ============================
+   PALETA DE COLORES
+============================ */
+:root {
+    --primario: #1E1E2F;
+    --acento: #4ECCA3;
+    --fondo: #F5F5F5;
+    --blanco: #ffffff;
+}
+
+/* ============================
+   BODY Y FONDO GENERAL
+============================ */
+body {
+    background-color: var(--fondo);
+    color: #333;
+    font-family: "Segoe UI", sans-serif;
+}
+
+/* ============================
+   NAVBAR
+============================ */
+.bg-admin-dark {
+    background-color: var(--primario) !important;
+}
+
+.text-mint {
+    color: var(--acento) !important;
+}
+
+.btn-menu-toggle {
+    background: var(--acento);
+    color: var(--primario);
+    font-weight: bold;
+    padding: 6px 10px;
+    border-radius: 5px;
+}
+
+/* ============================
+   SIDEBAR ADMIN
+============================ */
+.sidebar-admin {
+    width: 250px;
+    background-color: var(--primario);
+    color: var(--blanco);
+    min-height: 100vh;
+    position: fixed;
+    transition: transform .3s ease;
+}
+
+.sidebar-admin .divider {
+    border-color: rgba(255,255,255,0.2);
+}
+
+.admin-link {
+    color: var(--blanco);
+    padding: 10px 12px;
+    border-radius: 6px;
+    transition: background .2s;
+}
+
+.admin-link:hover {
+    background: rgba(78, 204, 163, 0.2);
+    color: var(--acento);
+}
+
+/* MODO RESPONSIVE */
+@media (max-width: 992px) {
+    .sidebar-admin {
+        transform: translateX(-260px);
+        position: fixed;
+        z-index: 999;
+    }
+
+    .sidebar-admin.show-sidebar {
+        transform: translateX(0);
+    }
+}
+
+/* ============================
+   CONTENIDO PRINCIPAL
+============================ */
+.admin-content {
+    margin-left: 250px;
+    padding: 30px;
+    width: 100%;
+}
+
+@media (max-width: 992px) {
+    .admin-content {
+        margin-left: 0;
+        padding: 20px;
+    }
+}

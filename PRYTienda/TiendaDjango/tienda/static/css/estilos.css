@@ -1,0 +1,542 @@
+/* ESTILOS GENERALES */
+:root {
+    --color-primario: #0A4D68;
+    --color-acento: #05BFDB;
+    --color-fondo: #F4F9F9;
+    --color-texto: #333333;
+    --color-texto-claro: #666666;
+    --color-blanco: #FFFFFF;
+    --color-sombra: rgba(10, 77, 104, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--color-texto);
+    background-color: var(--color-fondo);
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* HEADER */
+.top-bar {
+    background-color: var(--color-primario);
+    color: var(--color-blanco);
+    padding: 8px 0;
+    font-size: 0.9rem;
+}
+
+.top-bar .contact-info span {
+    margin-right: 20px;
+}
+
+.top-bar .social-links a {
+    color: var(--color-blanco);
+    margin-left: 15px;
+    font-size: 0.9rem;
+}
+
+.top-bar .social-links a:hover {
+    color: var(--color-acento);
+}
+
+/* NAVBAR PRINCIPAL */
+.main-navbar {
+    background-color: var(--color-blanco) !important;
+    box-shadow: 0 4px 12px var(--color-sombra);
+    padding: 10px 0;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: var(--color-primario) !important;
+}
+
+.navbar-brand i {
+    color: var(--color-acento);
+}
+
+.navbar-nav .nav-link {
+    color: var(--color-texto) !important;
+    font-weight: 500;
+    padding: 8px 15px !important;
+    margin: 0 5px;
+    border-radius: 4px;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    color: var(--color-blanco) !important;
+    background-color: var(--color-acento);
+}
+
+/* DROPDOWN USUARIO */
+.user-dropdown .user-avatar {
+    width: 36px;
+    height: 36px;
+    background-color: var(--color-primario);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-blanco);
+}
+
+.user-info .user-name {
+    font-weight: 600;
+    display: block;
+    font-size: 0.9rem;
+}
+
+.user-info .user-role {
+    font-size: 0.75rem;
+    color: var(--color-texto-claro);
+}
+
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.dropdown-item {
+    padding: 10px 15px;
+}
+
+.dropdown-item:hover {
+    background-color: var(--color-fondo);
+    color: var(--color-primario);
+}
+
+/* ICONO CARRITO */
+.cart-icon {
+    position: relative;
+    font-size: 1.2rem;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--color-acento);
+    color: var(--color-blanco);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* BOTONES NAVBAR */
+.btn-login {
+    background-color: transparent;
+    border: 2px solid var(--color-primario);
+    color: var(--color-primario) !important;
+    border-radius: 50px;
+    padding: 8px 20px !important;
+}
+
+.btn-login:hover {
+    background-color: var(--color-primario);
+    color: var(--color-blanco) !important;
+}
+
+.btn-register {
+    background-color: var(--color-acento);
+    color: var(--color-blanco) !important;
+    border-radius: 50px;
+    padding: 8px 20px !important;
+}
+
+.btn-register:hover {
+    background-color: var(--color-primario);
+    color: var(--color-blanco) !important;
+}
+
+/* CONTENIDO PRINCIPAL */
+.main-content {
+    min-height: 70vh;
+    padding-bottom: 40px;
+}
+
+/* ALERTAS */
+.alert {
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* FOOTER */
+.footer {
+    background-color: var(--color-primario);
+    color: var(--color-blanco);
+    margin-top: 50px;
+}
+
+.footer-main {
+    padding: 60px 0 40px;
+}
+
+.footer-title {
+    color: var(--color-blanco);
+    font-weight: 600;
+    margin-bottom: 25px;
+    font-size: 1.2rem;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background-color: var(--color-acento);
+}
+
+.footer-text {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 20px;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--color-acento);
+    padding-left: 5px;
+}
+
+.contact-info li {
+    margin-bottom: 15px;
+    color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: flex-start;
+}
+
+.contact-info li i {
+    color: var(--color-acento);
+    margin-right: 10px;
+    margin-top: 5px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: var(--color-blanco);
+    font-size: 1rem;
+}
+
+.social-icons a:hover {
+    background-color: var(--color-acento);
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 20px 0;
+}
+
+.copyright {
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+}
+
+.payment-methods {
+    text-align: right;
+    font-size: 1.8rem;
+}
+
+.payment-methods i {
+    margin-left: 15px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+    .navbar-nav .nav-link {
+        margin: 5px 0;
+    }
+    
+    .user-info {
+        display: none;
+    }
+    
+    .payment-methods {
+        text-align: center;
+        margin-top: 15px;
+    }
+    
+    .payment-methods i {
+        margin: 0 8px;
+    }
+    
+    .copyright {
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .top-bar .contact-info {
+        display: none;
+    }
+    
+    .top-bar .social-links {
+        margin: 0 auto;
+    }
+    
+    .footer-widget {
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+    
+    .btn-login, .btn-register {
+        padding: 6px 15px !important;
+        font-size: 0.9rem;
+    }
+    
+    .footer-main {
+        padding: 40px 0 20px;
+    }
+}
+
+/* ANIMACIONES Y EFECTOS */
+.navbar-nav .nav-link {
+    position: relative;
+}
+
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background-color: var(--color-acento);
+    transition: width 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover::after,
+.navbar-nav .nav-link.active::after {
+    width: 80%;
+}
+
+/* EFECTO HOVER PARA TARJETAS */
+.card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(10, 77, 104, 0.15);
+}
+
+/* BOTONES GENERALES */
+.btn-primary-custom {
+    background-color: var(--color-primario);
+    color: var(--color-blanco);
+    border: none;
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary-custom:hover {
+    background-color: var(--color-acento);
+    color: var(--color-blanco);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(5, 191, 219, 0.3);
+}
+
+.btn-accent-custom {
+    background-color: var(--color-acento);
+    color: var(--color-blanco);
+    border: none;
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-accent-custom:hover {
+    background-color: var(--color-primario);
+    color: var(--color-blanco);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(10, 77, 104, 0.3);
+}
+
+.login-container {
+    max-width: 420px;
+    margin: 60px auto;
+    background: var(--color-blanco);
+    padding: 35px 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px var(--color-sombra);
+    animation: fadeIn 0.6s ease;
+}
+
+.login-title {
+    text-align: center;
+    font-weight: 700;
+    color: var(--color-primario);
+    margin-bottom: 25px;
+}
+
+.login-container label {
+    font-weight: 600;
+    color: var(--color-texto);
+}
+
+.login-container input {
+    border-radius: 8px;
+    border: 1px solid #dcdcdc;
+    padding: 10px 12px;
+}
+
+.login-container input:focus {
+    border-color: var(--color-acento);
+    box-shadow: 0 0 6px rgba(5, 191, 219, 0.3);
+}
+
+.login-btn {
+    background-color: var(--color-primario);
+    color: var(--color-blanco);
+    font-weight: 600;
+    border-radius: 50px;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    transition: .3s;
+}
+
+.login-btn:hover {
+    background-color: var(--color-acento);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(5, 191, 219, 0.3);
+}
+
+.login-register-link {
+    text-align: center;
+    margin-top: 15px;
+    display: block;
+    color: var(--color-primario);
+    font-weight: 500;
+}
+
+.login-register-link:hover {
+    color: var(--color-acento);
+}
+
+/* Animación */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.register-container {
+    max-width: 480px;
+    margin: 60px auto;
+    background: var(--color-blanco);
+    padding: 40px 35px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px var(--color-sombra);
+    animation: fadeIn 0.6s ease;
+}
+
+.register-title {
+    text-align: center;
+    font-weight: 700;
+    color: var(--color-primario);
+    margin-bottom: 25px;
+}
+
+.register-container label {
+    font-weight: 600;
+    color: var(--color-texto);
+}
+
+.register-container input {
+    border-radius: 8px;
+    border: 1px solid #dcdcdc;
+    padding: 10px 12px;
+}
+
+.register-container input:focus {
+    border-color: var(--color-acento);
+    box-shadow: 0 0 6px rgba(5, 191, 219, 0.3);
+}
+
+.register-btn {
+    background-color: var(--color-acento);
+    color: var(--color-blanco);
+    font-weight: 600;
+    border-radius: 50px;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    transition: .3s;
+}
+
+.register-btn:hover {
+    background-color: var(--color-primario);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(10, 77, 104, 0.25);
+}
+
+.register-login-link {
+    text-align: center;
+    margin-top: 15px;
+    display: block;
+    color: var(--color-primario);
+    font-weight: 500;
+}
+
+.register-login-link:hover {
+    color: var(--color-acento);
+}

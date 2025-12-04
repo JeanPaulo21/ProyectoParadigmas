@@ -1,0 +1,46 @@
+{% extends 'layout_cliente.html' %}
+
+{% block title %}Registrarse{% endblock %}
+
+{% block content %}
+<div class="register-container">
+    <h3 class="register-title">Crear Cuenta</h3>
+
+    {% if messages %}
+        {% for m in messages %}
+            <div class="alert alert-{{ m.tags }}">{{ m }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label>Nombre</label>
+            <input type="text" name="nombre" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label>Correo</label>
+            <input type="email" name="correo" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label>Contraseña</label>
+            <input type="password" name="contrasena" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label>Confirmar contraseña</label>
+            <input type="password" name="confirmar" class="form-control" required>
+        </div>
+
+        <button class="register-btn">Registrarse</button>
+
+        <a href="{% url 'login' %}" class="register-login-link">
+            ¿Ya tienes una cuenta? Iniciar sesión
+        </a>
+    </form>
+</div>
+
+{% endblock %}
