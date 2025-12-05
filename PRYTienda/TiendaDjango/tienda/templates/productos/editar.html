@@ -1,0 +1,47 @@
+{% extends "layout_tienda.html" %}
+
+{% block title %}Editar Producto{% endblock %}
+
+{% block content %}
+
+<h2>Editar Producto</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        {{ form.Nombre }}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Descripción</label>
+        {{ form.Descripcion }}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Precio</label>
+        {{ form.Precio }}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Stock</label>
+        {{ form.Stock }}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Imagen</label>
+        {{ form.Imagen }}
+        <small class="text-muted">{{ form.Imagen.help_text }}</small>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Categoría</label>
+        {{ form.Categoria }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Actualizar</button>
+    <a href="{% url 'listar_productos' %}" class="btn btn-secondary">Volver</a>
+</form>
+
+{% endblock %}

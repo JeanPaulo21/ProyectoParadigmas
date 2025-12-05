@@ -12,6 +12,9 @@ from tienda.views.home_view import home
 # USUARIOS
 from tienda.views import usuario_view
 
+# PRODUCTOS
+from tienda.views import producto_view
+
 
 urlpatterns = [
     # HOME
@@ -30,4 +33,13 @@ urlpatterns = [
     path('usuarios/crear/', usuario_view.crear_usuario, name='crear_usuario'),
     path('usuarios/estado/<int:id>/', usuario_view.cambiar_estado_usuario, name='cambiar_estado_usuario'),
     path("usuarios/editar/<int:id>/", usuario_view.editar_usuario, name="editar_usuario"),
+
+    # PRODUCTOS (ADMIN)
+    path('productos/', producto_view.listar_productos, name='listar_productos'),
+    path('productos/crear/', producto_view.crear_producto, name='crear_producto'),
+    path('productos/estado/<int:id>/', producto_view.cambiar_estado_producto, name='cambiar_estado_producto'),
+    path("productos/editar/<int:id>/", producto_view.editar_producto, name="editar_producto"),
+
+    # PRODUCTOS (CLIENTE)
+    path('tienda/productos/', producto_view.listar_productos_publico, name='listar_productos_publico'),
 ]
