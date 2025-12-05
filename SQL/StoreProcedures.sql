@@ -211,6 +211,103 @@ BEGIN
     FROM SC_Tienda.T_PEDIDOS;
 END
 GO
+/*CREAR DESDE CARRITO*/
+CREATE OR ALTER PROCEDURE SC_Tienda.SP_CrearPedidoDesdeCarrito
+    @UsuarioID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        DECLARE @PedidoID INT;
+        DECLARE @Subtotal DECIMAL(10,2);
+        DECLARE @Total DECIMAL(10,2);
+
+        -------------------------------------------
+        -- 1) Calcular subtotal de productos del carrito
+        -------------------------------------------
+        SELECT @Subtotal = SUM(c.Cantidad * p.Precio)
+        FROM SC_Tienda.T_CARRITO c
+        INNER JOIN SC_Tienda.T_PRODUCTOS p ON c.ProductoID = p.ID
+        WHERE c.UsuarioID = @UsuarioID;
+
+        IF @Subtotal IS NULL OR @Subtotal = 0
+        BEGIN
+            RAISERROR('El carrito está vacío o no tiene productos válidos.', 16, 1);
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
+
+        -------------------------------------------
+        -- 2) Calcular total (si deseas agregar impuesto, aquí se modifica)
+        -------------------------------------------
+        SET @Total = @Subtotal;  -- ← SIN impuesto, igual que tus pedidos actuales
+        -- SET @Total = @Subtotal + (@Subtotal * 0.13); -- ← Activa esto si quieres impuesto
+
+        -------------------------------------------
+        -- 3) Crear pedido
+        -------------------------------------------
+        INSERT INTO SC_Tienda.T_PEDIDOS (UsuarioID, Total, Estado, Fecha, FechaCreacion)
+        VALUES (@UsuarioID, @Total, 'pendiente', GETDATE(), GETDATE());
+
+        SET @PedidoID = SCOPE_IDENTITY();
+
+        -------------------------------------------
+        -- 4) Insertar detalles del pedido
+        -------------------------------------------
+        INSERT INTO SC_Tienda.T_DETALLE_PEDIDOS (PedidoID, ProductoID, Cantidad, Precio, FechaCreacion)
+        SELECT
+            @PedidoID,
+            c.ProductoID,
+            c.Cantidad,
+            p.Precio,
+            GETDATE()
+        FROM SC_Tienda.T_CARRITO c
+        INNER JOIN SC_Tienda.T_PRODUCTOS p ON c.ProductoID = p.ID
+        WHERE c.UsuarioID = @UsuarioID;
+
+        -------------------------------------------
+        -- 5) Actualizar stock de productos
+        -------------------------------------------
+        UPDATE p
+        SET p.Stock = p.Stock - c.Cantidad
+        FROM SC_Tienda.T_PRODUCTOS p
+        INNER JOIN SC_Tienda.T_CARRITO c ON p.ID = c.ProductoID
+        WHERE c.UsuarioID = @UsuarioID;
+
+        -- Validar stock negativo
+        IF EXISTS (SELECT 1 FROM SC_Tienda.T_PRODUCTOS WHERE Stock < 0)
+        BEGIN
+            RAISERROR('No hay suficiente stock para completar la compra.', 16, 1);
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
+
+        -------------------------------------------
+        -- 6) Vaciar carrito del usuario
+        -------------------------------------------
+        DELETE FROM SC_Tienda.T_CARRITO WHERE UsuarioID = @UsuarioID;
+
+        -------------------------------------------
+        -- 7) Finalizar
+        -------------------------------------------
+        COMMIT TRANSACTION;
+
+        PRINT 'Pedido creado correctamente y stock actualizado.';
+
+        -- 8) Retornar pedido
+        SELECT @PedidoID AS PedidoID;
+
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        PRINT ERROR_MESSAGE();
+    END CATCH
+END;
+GO
+
 -------------- 
 /*DETALLE PEDIDOS*/
 --------------
