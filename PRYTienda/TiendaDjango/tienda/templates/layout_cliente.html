@@ -45,7 +45,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 
-<div class="collapse navbar-collapse" id="navbarCliente">
+                <div class="collapse navbar-collapse" id="navbarCliente">
                     <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link active" href="{% url 'home' %}">Inicio</a>
@@ -85,9 +85,11 @@
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link cart-icon" href="#">
+                                <a class="nav-link cart-icon position-relative" href="{% url 'ver_carrito' %}">
                                     <i class="fas fa-shopping-cart"></i>
-                                    <span class="cart-badge">3</span>
+                                    <span class="cart-badge position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="carrito-contador">
+                                        0
+                                    </span>
                                 </a>
                             </li>
                         {% else %}
@@ -206,6 +208,27 @@
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    
+    {% if request.session.usuario_id %}
+    <script>
+        // Actualizar contador del carrito
+        function actualizarContadorCarrito() {
+            fetch('/carrito/contador/')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('carrito-contador').textContent = data.count;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+        
+        // Actualizar al cargar la página
+        actualizarContadorCarrito();
+        
+        // Actualizar cada 30 segundos (opcional)
+        setInterval(actualizarContadorCarrito, 30000);
+    </script>
+    {% endif %}
+    
     {% block scripts %}{% endblock %}
 </body>
 </html>

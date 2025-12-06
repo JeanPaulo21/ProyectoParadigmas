@@ -77,8 +77,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'mssql',
         'NAME': 'BD_TiendaProyecto',
-        'HOST': r'DESKTOP-9JB8O34\SQLEXPRESS',
-        'PORT': '1433',
+        'HOST': r'DESKTOP-B5FVRKN\SQLEXPRESS01',
         'OPTIONS': {
             'trusted_connection': 'yes',
             'trustServerCertificate': 'yes',

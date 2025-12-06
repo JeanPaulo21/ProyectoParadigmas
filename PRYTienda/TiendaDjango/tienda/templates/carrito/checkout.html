@@ -1,0 +1,124 @@
+{% extends "layout_cliente.html" %}
+{% load carrito_extras %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4">💳 Procesar Pago</h2>
+
+    <div class="row">
+        <!-- Formulario de Pago -->
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Información de Pago</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{% url 'procesar_pago' %}" id="payment-form">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="card_name" class="form-label">Nombre en la Tarjeta *</label>
+                            <input type="text" class="form-control" id="card_name" name="card_name" 
+                                   placeholder="Juan Pérez" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="card_number" class="form-label">Número de Tarjeta *</label>
+                            <input type="text" class="form-control" id="card_number" name="card_number" 
+                                   placeholder="1234 5678 9012 3456" maxlength="19" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="expiry_date" class="form-label">Fecha de Expiración *</label>
+                                <input type="text" class="form-control" id="expiry_date" name="expiry_date" 
+                                       placeholder="MM/AA" maxlength="5" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="cvv" class="form-label">CVV *</label>
+                                <input type="text" class="form-control" id="cvv" name="cvv" 
+                                       placeholder="123" maxlength="4" required>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i> 
+                            <strong>Nota:</strong> Este es un sistema de prueba. Los datos ingresados no son procesados realmente.
+                        </div>
+
+                        <button type="submit" class="btn btn-success btn-lg w-100">
+                            <i class="fas fa-lock me-2"></i>Confirmar Pago - ₡ {{ total }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resumen del Pedido -->
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Resumen del Pedido</h5>
+                </div>
+                <div class="card-body">
+                    {% for item in items %}
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex align-items-center">
+                            {% if item.producto_imagen %}
+                            <img src="{{ item.producto_imagen }}" alt="{{ item.producto_nombre }}" 
+                                 style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
+                            {% endif %}
+                            <div>
+                                <strong>{{ item.producto_nombre }}</strong><br>
+                                <small class="text-muted">Cantidad: {{ item.cantidad }}</small>
+                            </div>
+                        </div>
+                        <span>₡ {{ item.cantidad|multiply:item.producto_precio }}</span>
+                    </div>
+                    {% endfor %}
+                    
+                    <hr>
+                    
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Subtotal:</span>
+                        <span>₡ {{ total }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <strong>Total:</strong>
+                        <strong class="text-success fs-4">₡ {{ total }}</strong>
+                    </div>
+
+                    <a href="{% url 'ver_carrito' %}" class="btn btn-outline-secondary w-100">
+                        <i class="fas fa-arrow-left me-2"></i>Volver al Carrito
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Formatear número de tarjeta
+document.getElementById('card_number').addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\s/g, '');
+    let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+    e.target.value = formattedValue;
+});
+
+// Formatear fecha de expiración
+document.getElementById('expiry_date').addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length >= 2) {
+        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+    }
+    e.target.value = value;
+});
+
+// Solo números en CVV
+document.getElementById('cvv').addEventListener('input', function(e) {
+    e.target.value = e.target.value.replace(/\D/g, '');
+});
+</script>
+{% endblock %}

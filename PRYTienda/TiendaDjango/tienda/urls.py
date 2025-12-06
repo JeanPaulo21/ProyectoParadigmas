@@ -15,6 +15,9 @@ from tienda.views import usuario_view
 # PRODUCTOS
 from tienda.views import producto_view
 
+# CARRITO
+from tienda.views import carrito_views
+
 
 urlpatterns = [
     # HOME
@@ -42,4 +45,13 @@ urlpatterns = [
 
     # PRODUCTOS (CLIENTE)
     path('tienda/productos/', producto_view.listar_productos_publico, name='listar_productos_publico'),
+    
+    # CARRITO
+    path('carrito/', carrito_views.ver_carrito, name='ver_carrito'),
+    path('carrito/agregar/<int:producto_id>/', carrito_views.agregar_al_carrito, name='agregar_al_carrito'),
+    path('carrito/remover/<int:item_id>/', carrito_views.remover_del_carrito, name='remover_del_carrito'),
+    path('carrito/contador/', carrito_views.obtener_contador_carrito, name='obtener_contador_carrito'),
+    path('carrito/checkout/', carrito_views.checkout, name='checkout'),
+    path('carrito/procesar-pago/', carrito_views.procesar_pago, name='procesar_pago'),
+    path('carrito/confirmacion/<int:pedido_id>/', carrito_views.confirmacion_pedido, name='confirmacion_pedido'),
 ]

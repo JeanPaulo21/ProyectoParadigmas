@@ -31,9 +31,13 @@
                     {# Botón solo si el usuario está logueado #}
                     {% if request.session.usuario_id %}
                         {% if p.estado %}
-                            <button class="btn btn-accent-custom mt-3 w-100" type="button">
-                                Añadir al carrito
-                            </button>
+                            <form method="POST" action="{% url 'agregar_al_carrito' p.id %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="cantidad" value="1">
+                                <button class="btn btn-accent-custom mt-3 w-100" type="submit">
+                                    Añadir al carrito
+                                </button>
+                            </form>
                         {% else %}
                             <button class="btn btn-secondary mt-3 w-100" type="button" disabled>
                                 Producto inactivo
