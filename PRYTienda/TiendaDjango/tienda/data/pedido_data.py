@@ -5,9 +5,7 @@ from tienda.models.response.pedido_response import PedidoResponse
 from tienda.models.response.detalle_pedido_response import DetallePedidoResponse
 
 
-
 class PedidoData:
-
 
     @staticmethod
     def crear_pedido_desde_carrito(usuario_id):
@@ -21,23 +19,22 @@ class PedidoData:
                 """,
                 [usuario_id],
             )
-            
+
             row = cursor.fetchone()
             conn.commit()
-            
+
             if row:
                 pedido_id = row[0]
                 cursor.close()
                 return pedido_id
-            
+
             cursor.close()
             return None
-            
+
         except Exception as e:
             conn.rollback()
             cursor.close()
             raise e
-
 
     @staticmethod
     def obtener_pedido_por_id(pedido_id):
@@ -65,7 +62,6 @@ class PedidoData:
             estado=row[4],
             fecha_creacion=row[5],
         )
-
 
     @staticmethod
     def obtener_detalles_pedido(pedido_id):
@@ -110,7 +106,6 @@ class PedidoData:
 
         return lista
 
-
     @staticmethod
     def listar_pedidos_por_usuario(usuario_id):
         conn = obtener_conexion()
@@ -143,3 +138,70 @@ class PedidoData:
             )
 
         return lista
+
+    @staticmethod
+    def listar_pedidos():
+        """Lista todos los pedidos (uso para administradores)."""
+        conn = obtener_conexion()
+        cursor = conn.cursor()
+
+        cursor.execute(
+            """
+            EXEC SC_Tienda.SP_ListarPedidos
+            """
+        )
+
+        rows = cursor.fetchall()
+        cursor.close()
+
+        lista = []
+        for r in rows:
+            lista.append(
+                PedidoResponse(
+                    id=r[0],
+                    usuario_id=r[1],
+                    fecha=r[2],
+                    total=r[3],
+                    estado=r[4],
+                    fecha_creacion=r[5],
+                )
+            )
+
+        return lista
+
+    @staticmethod
+    def cambiar_estado_pedido(pedido_id, nuevo_estado=None):
+        """Cambia el estado de un pedido.
+
+        Si no se indica "nuevo_estado", alterna entre 'pendiente' y 'completado',
+        usando los valores permitidos por el CHECK de la tabla.
+        """
+        conn = obtener_conexion()
+        cursor = conn.cursor()
+
+        if nuevo_estado is None:
+            pedido = PedidoData.obtener_pedido_por_id(pedido_id)
+            if not pedido:
+                cursor.close()
+                return False
+
+            estado_actual = str(pedido.estado)
+
+            if estado_actual.lower() == "pendiente":
+                nuevo_estado = "completado"
+            else:
+                nuevo_estado = "pendiente"
+
+        cursor.execute(
+            """
+            EXEC SC_Tienda.SP_CambiarEstadoPedido 
+                @ID=%s,
+                @Estado=%s
+            """,
+            [pedido_id, nuevo_estado],
+        )
+
+        conn.commit()
+        cursor.close()
+
+        return True

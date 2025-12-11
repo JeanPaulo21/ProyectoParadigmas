@@ -11,7 +11,11 @@
                 <div class="mb-3">
                     <i class="fas fa-check-circle text-success" style="font-size: 80px;"></i>
                 </div>
+                {% if pedido.estado == 'completado' %}
+                <h2 class="text-success">¡Pedido Entregado!</h2>
+                {% else %}
                 <h2 class="text-success">¡Pedido Confirmado!</h2>
+                {% endif %}
                 <p class="text-muted">Tu pago ha sido procesado exitosamente</p>
             </div>
 
@@ -41,7 +45,17 @@
                             <strong>Estado:</strong>
                         </div>
                         <div class="col-6 text-end">
-                            <span class="badge bg-warning">{{ pedido.estado }}</span>
+                            <td>
+                            {% if pedido.estado == 'completado' %}
+                            <span class="badge bg-success">Completado</span>
+                            {% elif pedido.estado == 'cancelado' %}
+                            <span class="badge bg-danger">Cancelado</span>
+                            {% elif pedido.estado == 'procesando' %}
+                            <span class="badge bg-info text-dark">Procesando</span>
+                            {% else %}
+                            <span class="badge bg-warning text-dark">Pendiente</span>
+                            {% endif %}
+                        </td>
                         </div>
                     </div>
                     <div class="row">

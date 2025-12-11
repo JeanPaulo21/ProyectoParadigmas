@@ -12,6 +12,8 @@ from tienda.views import producto_view
 
 from tienda.views import carrito_views
 
+from tienda.views import pedido_view
+
 
 urlpatterns = [
     path("home/index", home, name="home"),
@@ -41,4 +43,9 @@ urlpatterns = [
     path('carrito/checkout/', carrito_views.checkout, name='checkout'),
     path('carrito/procesar-pago/', carrito_views.procesar_pago, name='procesar_pago'),
     path('carrito/confirmacion/<int:pedido_id>/', carrito_views.confirmacion_pedido, name='confirmacion_pedido'),
+
+    
+    path('panel/pedidos/', pedido_view.listar_pedidos, name='listar_pedidos'),
+    path('panel/pedidos/estado/<int:id>/', pedido_view.cambiar_estado_pedido, name='cambiar_estado_pedido'),
+    path('mis-pedidos/', pedido_view.mis_pedidos, name='mis_pedidos'),
 ]
