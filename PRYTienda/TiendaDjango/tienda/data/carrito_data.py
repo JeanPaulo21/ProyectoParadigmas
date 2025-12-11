@@ -6,9 +6,7 @@ from tienda.models.response.carrito_response import CarritoResponse
 
 class CarritoData:
 
-    # ================================
-    #  AGREGAR AL CARRITO
-    # ================================
+
     @staticmethod
     def agregar_al_carrito(req):
         conn = obtener_conexion()
@@ -28,9 +26,7 @@ class CarritoData:
         cursor.close()
         return True
 
-    # ================================
-    #  REMOVER DEL CARRITO
-    # ================================
+
     @staticmethod
     def remover_del_carrito(id):
         conn = obtener_conexion()
@@ -47,15 +43,12 @@ class CarritoData:
         cursor.close()
         return True
 
-    # ================================
-    #  LISTAR CARRITO POR USUARIO
-    # ================================
+
     @staticmethod
     def listar_carrito_por_usuario(usuario_id):
         conn = obtener_conexion()
         cursor = conn.cursor()
 
-        # Consulta mejorada con JOIN para traer datos del producto
         cursor.execute(
             """
             SELECT 
@@ -94,18 +87,14 @@ class CarritoData:
 
         return lista
 
-    # ================================
-    #  OBTENER TOTAL DEL CARRITO
-    # ================================
+
     @staticmethod
     def obtener_total_carrito(usuario_id):
         items = CarritoData.listar_carrito_por_usuario(usuario_id)
         total = sum(item.cantidad * item.producto_precio for item in items)
         return total
 
-    # ================================
-    #  CONTAR ITEMS EN CARRITO
-    # ================================
+
     @staticmethod
     def contar_items_carrito(usuario_id):
         items = CarritoData.listar_carrito_por_usuario(usuario_id)

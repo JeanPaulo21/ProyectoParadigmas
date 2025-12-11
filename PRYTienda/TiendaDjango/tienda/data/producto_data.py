@@ -4,9 +4,7 @@ from tienda.models.response.producto_response import ProductoResponse
 
 class ProductoData:
 
-    # ================================
-    #  LISTAR TODOS
-    # ================================
+
     @staticmethod
     def listar_productos():
         conn = obtener_conexion()
@@ -36,9 +34,7 @@ class ProductoData:
 
         return lista
 
-    # ================================
-    #  CREAR PRODUCTO
-    # ================================
+
     @staticmethod
     def crear_producto(req):
         conn = obtener_conexion()
@@ -68,9 +64,7 @@ class ProductoData:
         cursor.close()
         return True
 
-    # ================================
-    #  ACTUALIZAR PRODUCTO
-    # ================================
+
     @staticmethod
     def actualizar_producto(req):
         conn = obtener_conexion()
@@ -102,9 +96,7 @@ class ProductoData:
         cursor.close()
         return True
 
-    # ================================
-    #  CAMBIAR ESTADO
-    # ================================
+
     @staticmethod
     def cambiar_estado_producto(id):
         conn = obtener_conexion()
@@ -126,9 +118,7 @@ class ProductoData:
         cursor.close()
         return True
 
-    # ================================
-    #  OBTENER POR ID
-    # ================================
+
     @staticmethod
     def obtener_producto_por_id(id):
         conn = obtener_conexion()

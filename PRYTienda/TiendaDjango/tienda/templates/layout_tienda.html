@@ -5,15 +5,12 @@
     <meta charset="UTF-8">
     <title>{% block title %}Panel{% endblock %}</title>
 
-    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
 
-    <!-- Tus estilos -->
     <link rel="stylesheet" href="{% static 'css/estilosad.css' %}">
 </head>
 <body>
 
-    <!-- NAVBAR SUPERIOR -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-admin-dark">
         <div class="container-fluid">
 
@@ -54,10 +51,8 @@
         </div>
     </nav>
 
-    <!-- CONTENEDOR PRINCIPAL -->
     <div class="d-flex">
 
-        <!-- SIDEBAR ADMIN -->
         <aside class="sidebar-admin" id="sidebarAdmin">
             <h4 class="text-center py-3 mb-0 text-mint">Panel Tienda</h4>
             <hr class="divider">
@@ -85,7 +80,6 @@
             </ul>
         </aside>
 
-        <!-- CONTENIDO -->
         <main class="admin-content">
             {% block content %}{% endblock %}
         </main>
@@ -93,7 +87,6 @@
     </div>
 
     <script>
-        // Sidebar Toggle Responsive
         document.getElementById("btnMenu").addEventListener("click", () => {
             document.getElementById("sidebarAdmin").classList.toggle("show-sidebar");
         });

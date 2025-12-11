@@ -8,9 +8,7 @@ from tienda.models.response.detalle_pedido_response import DetallePedidoResponse
 
 class PedidoData:
 
-    # ================================
-    #  CREAR PEDIDO DESDE CARRITO
-    # ================================
+
     @staticmethod
     def crear_pedido_desde_carrito(usuario_id):
         conn = obtener_conexion()
@@ -24,7 +22,6 @@ class PedidoData:
                 [usuario_id],
             )
             
-            # El SP retorna el PedidoID
             row = cursor.fetchone()
             conn.commit()
             
@@ -41,9 +38,7 @@ class PedidoData:
             cursor.close()
             raise e
 
-    # ================================
-    #  OBTENER PEDIDO POR ID
-    # ================================
+
     @staticmethod
     def obtener_pedido_por_id(pedido_id):
         conn = obtener_conexion()
@@ -71,9 +66,7 @@ class PedidoData:
             fecha_creacion=row[5],
         )
 
-    # ================================
-    #  OBTENER DETALLES DE PEDIDO
-    # ================================
+
     @staticmethod
     def obtener_detalles_pedido(pedido_id):
         conn = obtener_conexion()
@@ -117,9 +110,7 @@ class PedidoData:
 
         return lista
 
-    # ================================
-    #  LISTAR PEDIDOS POR USUARIO
-    # ================================
+
     @staticmethod
     def listar_pedidos_por_usuario(usuario_id):
         conn = obtener_conexion()

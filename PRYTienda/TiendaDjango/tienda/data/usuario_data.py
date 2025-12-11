@@ -5,9 +5,7 @@ from tienda.models.response.usuario_response import UsuarioResponse
 
 class UsuarioData:
 
-    # ================================
-    #  LISTAR TODOS
-    # ================================
+
     @staticmethod
     def listar_usuarios():
         conn = obtener_conexion()
@@ -34,15 +32,12 @@ class UsuarioData:
 
         return lista
 
-    # ================================
-    #  CREAR USUARIO (con BCrypt)
-    # ================================
+
     @staticmethod
     def crear_usuario(req):
         conn = obtener_conexion()
         cursor = conn.cursor()
 
-        # 🔐 Hash de contraseña
         hashed = bcrypt.hashpw(req.Contrasena.encode('utf-8'), bcrypt.gensalt())
         hashed = hashed.decode('utf-8')
 
@@ -57,27 +52,23 @@ class UsuarioData:
         cursor.close()
         return True
 
-    # ================================
-    #  ACTUALIZAR USUARIO (con BCrypt inteligente)
-    # ================================
+
     @staticmethod
     def actualizar_usuario(req):
         conn = obtener_conexion()
         cursor = conn.cursor()
 
-        # Si trae contraseña → la hasheamos
         if req.Contrasena:
             hashed = bcrypt.hashpw(req.Contrasena.encode('utf-8'), bcrypt.gensalt())
             hashed = hashed.decode('utf-8')
         else:
-            # Si no viene nada, obtener la contraseña actual
             cursor.execute("""
                 SELECT Contrasena 
                 FROM SC_Tienda.T_USUARIOS 
                 WHERE ID=%s
             """, [req.ID])
 
-            hashed = cursor.fetchone()[0]  # contraseña actual
+            hashed = cursor.fetchone()[0] 
 
         cursor.execute("""
             EXEC SC_Tienda.SP_ActualizarUsuario 
@@ -91,9 +82,7 @@ class UsuarioData:
         cursor.close()
         return True
 
-    # ================================
-    #  CAMBIAR ESTADO
-    # ================================
+
     @staticmethod
     def cambiar_estado_usuario(id):
         conn = obtener_conexion()
@@ -112,9 +101,7 @@ class UsuarioData:
         cursor.close()
         return True
 
-    # ================================
-    #  OBTENER POR ID
-    # ================================
+
     @staticmethod
     def obtener_usuario_por_id(id):
         conn = obtener_conexion()
@@ -138,9 +125,7 @@ class UsuarioData:
             estado=row[5],
             fecha_creacion=row[6]
         )
-    # ================================
-    #  AUTENTICAR USUARIO (LOGIN)
-    # ================================
+
     @staticmethod
     def autenticar_usuario(correo):        
         conn = obtener_conexion()

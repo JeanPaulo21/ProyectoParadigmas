@@ -8,7 +8,6 @@ class CarritoResponse:
         self.producto_id = producto_id
         self.cantidad = cantidad
         self.fecha_creacion = fecha_creacion
-        # Datos extras del producto
         self.producto_nombre = producto_nombre
         self.producto_precio = producto_precio
         self.producto_imagen = producto_imagen
